@@ -12,10 +12,10 @@ client.on('init', () => {
 client.on('message', (msg) => {
     if(!msg.content.startsWith(prefix)) return;
 
-    const cldwn = cooldown.get(msg.author.id);
+    const cldwn = cooldown.get(msg.author?.id);
 
-    if (Date.now() < cldwn) return;
-    cooldown.set(msg.author.id, Date.now() + 10000);
+    if (msg.author && Date.now() < cldwn) return;
+    if(msg.author) cooldown.set(msg.author.id, Date.now() + 10000);
 
     const args = msg.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
@@ -33,4 +33,4 @@ client.on('message', (msg) => {
     }
 });
 
-client.connect(process.env.token)
+client.connect(process.env.sfe)

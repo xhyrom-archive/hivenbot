@@ -3,6 +3,6 @@ module.exports = (client, msg, args) => {
         `__**Help**__`,
         ``,
         `\`!meme\` - meme loool`,
-        `\`!info\` - bot info`
+        `\`!info house/user/bot\` - bot info`
     ].join('\n'))
 }
