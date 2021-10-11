@@ -40,14 +40,16 @@ client.on('house_member_join', (member) => {
   client.rooms.get('299111108394875159').send(`Welcome <@${member.user.id}> ${member.user.name}`);
 })
 
-client.on('message', (msg) => {
+client.on('message', async(msg) => {
     if(msg.room.id !== '298900138657577806') return;
     if(!msg.content.startsWith(prefix)) return;
 
+    if(!msg.author) msg.author = await client.users.resolve(msg.author_id);
+
     const cldwn = cooldown.get(msg.author?.id);
 
-    if (msg.author && Date.now() < cldwn) return;
-    if(msg.author) cooldown.set(msg.author.id, Date.now() + 10000);
+    if (Date.now() < cldwn) return;
+    cooldown.set(msg.author.id, Date.now() + 10000);
 
     const args = msg.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();

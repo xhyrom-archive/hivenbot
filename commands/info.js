@@ -20,7 +20,7 @@ module.exports = async(client, msg, args) => {
     } else if(args[0] === 'user') {
         moment.locale('cs');
 
-        if(!msg.author) return msg.room.send(`:cake: I don't have you in my cache, try sending a message to the bot or try again later.`);
+        if(!msg.author) msg.author = await client.users.resolve(msg.author_id);
         await msg.house.members.collect();
 
         msg.room.send([
